@@ -8,6 +8,8 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 const server = http.createServer(app);
 
+const users = [];
+
 app.use(
     cors({
         origins: "*:*",
@@ -27,15 +29,14 @@ const io = new Server(server, {
         allowedHeaders: ["content-type"],
     },
 });
+
 io.on("connection", (socket) => {
-    console.log("a user connected.");
+    console.log("a user connected");
+
+    console.log(socket.handshake.auth);
 
     socket.on("disconnect", () => {
         console.log("a user disconnected.");
-    });
-
-    socket.on("test", () => {
-        io.emit("all_user_test", { property: "Hi!" });
     });
 });
 
