@@ -10,8 +10,9 @@ const server = http.createServer(app);
 
 app.use(
     cors({
-        origin: "https://chatapp-teets-dev.herokuapp.com/",
+        origins: "*:*",
         methods: ["GET", "POST"],
+        allowedHeaders: ["content-type"],
     })
 );
 app.use(express.json());
@@ -21,8 +22,9 @@ require("./routes/test.routes")(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "https://chatapp-teets-dev.herokuapp.com/",
+        origins: "*:*",
         methods: ["GET", "POST"],
+        allowedHeaders: ["content-type"],
     },
 });
 io.on("connection", (socket) => {
