@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
 
     socket.on("new_message", ({ content, author }) => {
         messages.push({ author, content });
-        socket.emit("getMessages", { messages });
+        io.emit("getMessages", { messages });
     });
 
     socket.on("disconnect", () => {
