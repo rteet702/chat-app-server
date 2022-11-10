@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 const server = http.createServer(app);
 
-const users = [];
+const messages = [];
 
 app.use(
     cors({
@@ -34,6 +34,13 @@ io.on("connection", (socket) => {
     console.log("a user connected");
 
     console.log(socket.handshake.auth);
+
+    socket.emit("getMessages", { messages });
+
+    socket.on("new_message", ({ content, author }) => {
+        messages.push({ author, content });
+        socket.emit("getMessages", { messages });
+    });
 
     socket.on("disconnect", () => {
         console.log("a user disconnected.");
