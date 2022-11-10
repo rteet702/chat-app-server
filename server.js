@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 const server = http.createServer(app);
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: `http://localhost:${PORT}` }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
