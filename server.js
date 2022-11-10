@@ -8,7 +8,12 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 const server = http.createServer(app);
 
-app.use(cors({ credentials: true, origin: `http://localhost:${PORT}` }));
+app.use(
+    cors({
+        credentials: true,
+        origin: `https://chatapp-teets-dev.herokuapp.com/`,
+    })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
