@@ -29,16 +29,18 @@ const io = new Server(server, {
 
 io.on("connection", async (socket) => {
     console.log("a user connected");
+    io.fetchSockets().then((sockets) => {
+        const arr = [];
+        for (const sock of sockets) {
+            arr.push(sock.handshake.auth);
+        }
+        io.emit("onlineUsers", { sockets: arr });
+    });
 
-    // socket.emit("getMessages", { messages });
     socket.emit("getMessages", {
         messages: await MessageController.findAll(),
     });
 
-    // socket.on("new_message", ({ content, author }) => {
-    //     messages.push({ author, content });
-    //     io.emit("getMessages", { messages });
-    // });
     socket.on("new_message", async ({ content, author }) => {
         await MessageController.send(author, content);
         io.emit("getMessages", {
