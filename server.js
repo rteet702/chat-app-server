@@ -49,6 +49,13 @@ io.on("connection", async (socket) => {
     });
 
     socket.on("disconnect", () => {
+        io.fetchSockets().then((sockets) => {
+            const arr = [];
+            for (const sock of sockets) {
+                arr.push(sock.handshake.auth);
+            }
+            io.emit("onlineUsers", { sockets: arr });
+        });
         console.log("a user disconnected.");
     });
 });
