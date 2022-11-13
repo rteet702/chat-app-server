@@ -12,6 +12,7 @@ datasource db {
 
 model messages {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
   author    String
   content   String
   createdAt DateTime @default(now())

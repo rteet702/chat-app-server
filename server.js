@@ -41,8 +41,8 @@ io.on("connection", async (socket) => {
         messages: await MessageController.findAll(),
     });
 
-    socket.on("new_message", async ({ content, author }) => {
-        await MessageController.send(author, content);
+    socket.on("new_message", async ({ content, author, email }) => {
+        await MessageController.send(author, content, email);
         io.emit("getMessages", {
             messages: await MessageController.findAll(),
         });

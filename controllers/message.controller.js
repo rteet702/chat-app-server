@@ -2,11 +2,12 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports = {
-    send: async (author, content) => {
+    send: async (author, content, email) => {
         const message = await prisma.messages.create({
             data: {
                 author,
                 content,
+                email,
             },
         });
 
